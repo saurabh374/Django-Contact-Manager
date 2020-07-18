@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  Detail
+{% endblock title %}
+    {% block content %}
+    {% if contact.manager == request.user %}
+    <div class="container">
+        <h2 class="heading font-weight-light text-center" >{{ contact.name }}</h2>
+        <hr>
+    </div>
+    <div class="container mt-3">
+      <div class="card my-2 mx-2 boy-card">
+        <img src="
+        {% if contact.image %}
+            {{contact.image.url}}
+        {% else %}
+            {% static './images/boy.png' %}
+        {% endif %}
+        " class="img-fluid" />
+        <div class="card-header">
+          <a href="{% url 'detail' contact.id %}" class="text-white header-link"
+            ><i class="fas fa-mars mr-2"></i>{{ contact.name }}</a
+          >
+        </div>
+        <div class="card-body pb-0">
+          <p>
+            <i class="fas fa-at mr-2"></i>
+            <a href="{{ contact.email }}">{{ contact.email }}</a>
+          </p>
+          <p>
+            <i class="fas fa-phone mr-2"></i>
+            <a href="tel:{{ contact.phone }}">{{ contact.phone }}</a>
+          </p>
+          <p><i class="fas fa-info-circle mr-2"></i>{{contact.info}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="container mt-3">
+      <h5 class="heading font-weight-light text-center my-3 " >Date Added: &nbsp; {{contact.date_added}}</h5>
+      <p class="text-center text-light" >
+        <a href="{% url 'update' contact.id %}" class="btn btn-info px-5">
+          <i class="fas fa-edit" ></i> &nbsp; Update
+        </a>
+        <a href="{% url 'delete' contact.id %}" class="btn btn-danger px-5">
+          <i class="fas fa-trash-alt" ></i> &nbsp; Delete
+        </a>
+        </p>
+    </div>
+    {% else %}
+      <div class="container">
+        <h2 class="heading font-weight-light text-center" >You Dont Have Access to this Page!</h2>
+
+      </div>
+    {% endif %}
+    {% endblock content %}
